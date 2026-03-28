@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'com.gradleup.shadow' version "8.3.0"
+}
+
+group = 'es.superstrellaa'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'net.minestom:minestom:2026.03.25-1.21.11'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+tasks {
+    jar {
+        manifest {
+            attributes['Main-Class'] = 'es.superstrellaa.Main'
+        }
+    }
+
+    build {
+        dependsOn(shadowJar)
+    }
+
+    shadowJar {
+        mergeServiceFiles()
+        archiveClassifier.set('')
+    }
+}
